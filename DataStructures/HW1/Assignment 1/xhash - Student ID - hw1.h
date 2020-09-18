@@ -111,7 +111,7 @@ public:
        auto iter = *(myVec.myData.myFirst + n * 2);
        int tmp{};
        for (; iter != *(myVec.myData.myFirst + n * 2 + 1); ++iter) ++tmp;
-       return iter != myList.end() ? ++tmp : 0;
+       return iter == myList.end() ? 0 : ++tmp;
    }
 
    // Inserts a new element in the unordered_set.
