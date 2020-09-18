@@ -159,7 +159,7 @@ public:
        int hash = bucket(keyVal);
        auto iter = *(myVec.myData.myFirst + hash * 2);
        for (; iter != *(myVec.myData.myFirst + hash * 2 + 1); ++iter) if (*iter == keyVal) return iter;
-       return iter != myList.end() ? *iter == keyVal ? iter : myList.end() : myList.end();
+       return iter == myList.end() ? myList.end() : *iter == keyVal ? iter : myList.end();
    }
 
 private:
