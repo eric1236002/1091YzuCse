@@ -1,0 +1,7 @@
+Get a integer N from parameter, and print the result of 1+2+...+N to STDOUT
+
+0 < N < 65535
+
+Sample input : 10
+Sample output : 55
+Sample command : ./tinin.exe 10
