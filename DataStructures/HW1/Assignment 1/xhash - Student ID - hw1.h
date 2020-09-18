@@ -141,13 +141,9 @@ public:
        auto iter = find(keyVal);
        if (iter == myList.end()) return;
 
-       int hash = bucket(keyVal);
-       auto head = myVec.myData.myFirst + hash * 2, tail = head + 1;
-
-       if (bucket_size(hash) == 1) *head = *tail = myList.end();
-
-       if (*head == iter)++* head;
-       if (*tail == iter)--* tail;
+       auto head = myVec.myData.myFirst + bucket(keyVal) * 2;
+       if (*head == *(head + 1)) *head = *(head + 1) = myList.end();
+       if (*head == iter || *(head + 1) == iter) *head == iter ? ++ * head : -- * (head + 1);
 
        myList.erase(iter);
    }
