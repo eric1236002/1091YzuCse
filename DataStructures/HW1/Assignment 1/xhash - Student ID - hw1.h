@@ -166,9 +166,9 @@ private:
    // put a new element in the unordered_set when myVec is large enough
    void putIn( const value_type &val )
    {
-       auto head = myVec.myData.myFirst + bucket(val) * 2, tail = head + 1;
+       auto head = myVec.myData.myFirst + bucket(val) * 2;
        myList.insert(*head, val);
-       *head == myList.end() && *tail == myList.end() ? -- * head, --* tail : --* head;
+       *head == myList.end() ? -- * head, --* (head + 1) : --* head;
    }
 
 protected:
