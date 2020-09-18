@@ -110,7 +110,7 @@ public:
    {
        auto iter = *(myVec.myData.myFirst + n * 2);
        int tmp{};
-       for (; iter != *(myVec.myData.myFirst + n * 2 + 1); ++iter) ++tmp;
+       while (iter != *(myVec.myData.myFirst + n * 2 + 1)) ++tmp, ++iter;
        return iter == myList.end() ? 0 : ++tmp;
    }
 
@@ -153,7 +153,7 @@ public:
    {
        int hash = bucket(keyVal);
        auto iter = *(myVec.myData.myFirst + hash * 2);
-       for (; iter != *(myVec.myData.myFirst + hash * 2 + 1); ++iter) if (*iter == keyVal) return iter;
+       while (iter != *(myVec.myData.myFirst + hash * 2 + 1) && *iter != keyVal) ++iter;
        return iter == myList.end() ? myList.end() : *iter == keyVal ? iter : myList.end();
    }
 
