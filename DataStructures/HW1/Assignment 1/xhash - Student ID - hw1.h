@@ -122,14 +122,14 @@ public:
    {
        if (find(val) != myList.end()) return;
 
-       if (size() == maxidx && (maxidx *= maxidx < 512 ? 8 : 2) && (mask = maxidx - 1))
+       if (size() == maxidx && (mask = (maxidx *= maxidx < 512 ? 8 : 2) - 1))
        {
            auto tmp = myList;
            myList.clear();
            myVec.assignGrow(maxidx * 2, myList.end());
            for (const auto& key : tmp) putIn(key);
        }
-       
+
        putIn(val);
    }
 
