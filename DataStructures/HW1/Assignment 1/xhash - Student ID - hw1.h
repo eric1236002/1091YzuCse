@@ -107,9 +107,9 @@ public:
    // Returns the number of elements in bucket n.
    size_type bucket_size( size_type n ) const
    {
-       auto iter = *(myVec.myData.myFirst + n * 2);
+       auto iter = myVec.myData.myFirst[n * 2];
        int tmp{};
-       while (iter != *(myVec.myData.myFirst + n * 2 + 1)) ++tmp, ++iter;
+       while (iter != myVec.myData.myFirst[n * 2 + 1]) ++tmp, ++iter;
        return iter == myList.end() ? 0 : ++tmp;
    }
 
@@ -139,7 +139,7 @@ public:
        auto iter = find(keyVal);
        if (iter == myList.end()) return;
 
-       auto head = myVec.myData.myFirst + bucket(keyVal) * 2;
+       auto head = &myVec.myData.myFirst[bucket(keyVal) * 2];
        if (*head == *(head + 1)) *head = *(head + 1) = myList.end();
        else if (*head == iter || *(head + 1) == iter) *head == iter ? ++ * head : -- * (head + 1);
 
@@ -151,8 +151,8 @@ public:
    iterator find( const key_type &keyVal )
    {
        int hash = bucket(keyVal);
-       auto iter = *(myVec.myData.myFirst + hash * 2);
-       while (iter != *(myVec.myData.myFirst + hash * 2 + 1) && *iter != keyVal) ++iter;
+       auto iter = myVec.myData.myFirst[hash * 2];
+       while (iter != myVec.myData.myFirst[hash * 2 + 1] && *iter != keyVal) ++iter;
        return iter == myList.end() ? myList.end() : *iter == keyVal ? iter : myList.end();
    }
 
@@ -160,7 +160,7 @@ private:
    // put a new element in the unordered_set when myVec is large enough
    void putIn( const value_type &val )
    {
-       auto head = myVec.myData.myFirst + bucket(val) * 2;
+       auto head = &myVec.myData.myFirst[bucket(val) * 2];
        myList.insert(*head, val);
        *head == myList.end() ? -- * head, --* (head + 1) : --* head;
    }
