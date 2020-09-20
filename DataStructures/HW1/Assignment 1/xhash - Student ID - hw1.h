@@ -41,9 +41,8 @@ struct HashVec
    void assignGrow( const size_type cells, const value_type val )
    {
        if (myData.myFirst) delete[] myData.myFirst;
-       myData.myFirst = new value_type[cells];
-       for (size_type i{}; i < cells; ++i) myData.myFirst[i] = val;
-       myData.myLast = myData.myEnd = myData.myFirst + cells;
+       myData.myLast = myData.myEnd = myData.myFirst = new value_type[cells];
+       do *myData.myLast++ = val; while (++myData.myEnd != myData.myFirst + cells);
    }
 
    ~HashVec()
