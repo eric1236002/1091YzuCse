@@ -107,10 +107,10 @@ public:
    // Returns the number of elements in bucket n.
    size_type bucket_size( size_type n ) const
    {
+       int cnt{};
        auto iter = myVec.myData.myFirst[n * 2];
-       int tmp{};
-       while (iter != myVec.myData.myFirst[n * 2 + 1]) ++tmp, ++iter;
-       return iter == myList.end() ? 0 : ++tmp;
+       while (iter != myVec.myData.myFirst[n * 2 + 1]) ++cnt, ++iter;
+       return iter == myList.end() ? 0 : ++cnt;
    }
 
    // Inserts a new element in the unordered_set.
@@ -141,7 +141,7 @@ public:
 
        auto head = &myVec.myData.myFirst[bucket(keyVal) * 2];
        if (*head == *(head + 1)) *head = *(head + 1) = myList.end();
-       else if (*head == iter || *(head + 1) == iter) *head == iter ? ++ * head : -- * (head + 1);
+       else if (*head == iter || *(head + 1) == iter) *head == iter ? ++ * head : -- * ++head;
 
        myList.erase(iter);
    }
@@ -162,7 +162,8 @@ private:
    {
        auto head = &myVec.myData.myFirst[bucket(val) * 2];
        myList.insert(*head, val);
-       *head == myList.end() ? -- * head, --* (head + 1) : --* head;
+       if ((*head)-- == myList.end())--* ++head;
+       //*head == myList.end() ? -- * head, --* ++head : --* head; // also be fine
    }
 
 protected:
