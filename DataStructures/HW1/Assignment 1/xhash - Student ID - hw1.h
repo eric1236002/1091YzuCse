@@ -110,10 +110,13 @@ public:
    // Returns the number of elements in bucket n.
    size_type bucket_size( size_type n ) const
    {
-       int cnt{};
-       auto iter = myVec.myData.myFirst[n * 2];
-       while (iter != myVec.myData.myFirst[n * 2 + 1]) ++cnt, ++iter;
-       return iter == myList.end() ? 0 : ++cnt;
+       auto head = &myVec.myData.myFirst[n * 2];
+       return *head == myList.end() ? 0 : std::distance(*head, *(head + 1)) + 1;
+       //int cnt{};
+       //auto iter = myVec.myData.myFirst[n * 2];
+       //while (iter != myVec.myData.myFirst[n * 2 + 1]) ++cnt, ++iter;
+       //return iter == myList.end() ? 0 : ++cnt;
+       // also be fine
    }
 
    // Inserts a new element in the unordered_set.
