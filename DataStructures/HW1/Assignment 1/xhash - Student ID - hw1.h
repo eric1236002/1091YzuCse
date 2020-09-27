@@ -143,7 +143,7 @@ public:
        if (iter == myList.end()) return;
 
        auto head = &myVec.myData.myFirst[bucket(keyVal) * 2];
-       if (*head == *(head + 1)) *head = *(head + 1) = myList.end();
+       if (*head == *(head + 1)) *head = *head++ = myList.end();
        else if (*head == iter || *(head + 1) == iter) *head == iter ? ++ * head : -- * ++head;
 
        myList.erase(iter);

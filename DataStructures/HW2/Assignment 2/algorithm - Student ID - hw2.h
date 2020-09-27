@@ -7,9 +7,11 @@ namespace MyNamespace
 {
 
    template< typename RanIt, typename Ty, typename Pr >
-   inline void pushHeapByIndex( RanIt first, ptrdiff_t hole, ptrdiff_t top, Ty &val, Pr pred )
+   inline void pushHeapByIndex( RanIt first, ptrdiff_t hole, ptrdiff_t top, Ty& val, Pr pred )
    {
-
+       auto i = (hole - 1) / 2; // parent
+       while (hole > top && pred(first[i], val)) first[hole] = first[i], i = ((hole = i) - 1) / 2;
+       first[hole] = val;
    }
 
    // push *(last - 1) onto heap at [first, last - 1), using pred
@@ -29,9 +31,12 @@ namespace MyNamespace
    template< typename RanIt, typename Ty, typename Pr >
    inline void popHeapHoleByIndex( RanIt first, ptrdiff_t hole, ptrdiff_t bottom, Ty &val, Pr pred )
    {
-
-
-      pushHeapByIndex( first, hole, top, val, pred );
+       auto top = hole, i = hole * 2 + 2; // i -> right child
+       for (; i < bottom; i = (hole = i) * 2 + 2)
+           first[hole] = first[pred(first[i], first[i - 1]) ? --i : i];
+       // if only have left child
+       if (i-- == bottom) first[hole] = first[i], hole = i;
+       pushHeapByIndex(first, hole, top, val, pred);
    }
 
    // pop *first to *(last - 1) and reheap, using pred
