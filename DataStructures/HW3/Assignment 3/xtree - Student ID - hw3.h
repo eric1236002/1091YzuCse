@@ -390,7 +390,7 @@ public:
        // not found
        if (node->isNil) return 0;
 
-       // if node has two children
+       // if the node has two children
        if (!node->left->isNil && !node->right->isNil)
        {   // let the node's right subtree's leftmost node's val replace node's val
            TreeNode< value_type >* RL = node->right;
