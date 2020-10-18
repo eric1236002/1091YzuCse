@@ -282,7 +282,7 @@ public:
        while (!dummy->isNil && node->myval != val)
            node = dummy, dummy = keyCompare(val, dummy->myval) ? dummy->left : dummy->right;
        
-       if (node->myval == val) return;
+       if (!node->isNil && node->myval == val) return;
 
        auto newNode = new TreeNode< value_type >{ head, node, head, red, false, val };
        ++scaryVal.mySize;
