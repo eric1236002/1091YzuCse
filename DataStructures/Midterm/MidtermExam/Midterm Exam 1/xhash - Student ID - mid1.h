@@ -40,7 +40,9 @@ struct HashVec
    // set the elements stored here to cells copies of val
    void assignGrow( const size_type cells, const value_type val )
    {
-
+	   if (myData.myFirst) delete[] myData.myFirst;
+	   myData.myEnd = (myData.myFirst = myData.myLast = new value_type[cells]) + cells;
+	   do *myData.myLast++ = val; while (myData.myLast != myData.myEnd);
    }
 
    ~HashVec()
@@ -105,7 +107,8 @@ public:
    // Returns the number of elements in bucket n.
    size_type bucket_size( size_type n ) const
    {
-
+	   auto h = &myVec.myData.myFirst[n * 2];
+	   return *h == myList.end() ? 0 : std::distance(*h, *(h + 1)) + 1;
    }
 
    // Inserts a new element in the unordered_set.
@@ -114,7 +117,17 @@ public:
    // This effectively increases the container size by one.
    void insert( const value_type &val )
    {
+	   if (find(val) != myList.end()) return;
 
+	   if (size() == maxidx && (mask = (maxidx *= maxidx < 512 ? 8 : 2) - 1))
+	   {
+		   auto tmp = myList;
+		   myList.clear();
+		   myVec.assignGrow(2 * maxidx, myList.end());
+		   for (auto& key : tmp) putIn(key);
+	   }
+
+	   putIn(val);
    }
 
    // Removes from the unordered_set a single element.
@@ -128,14 +141,19 @@ public:
    // returns an iterator to it if found, otherwise it returns myList.end()
    iterator find( const key_type &keyVal )
    {
-
+	   auto h = bucket(keyVal);
+	   auto it = myVec.myData.myFirst[h * 2];
+	   while (it != myVec.myData.myFirst[h * 2 + 1] && *it != keyVal) ++it;
+	   return it == myList.end() ? myList.end() : *it == keyVal ? it : myList.end();
    }
 
 private:
    // put a new element in the unordered_set when myVec is large enough
    void putIn( const value_type &val )
    {
-
+	   auto h = &myVec.myData.myFirst[bucket(val) * 2];
+	   myList.insert(*h, val);
+	   if ((*h)-- == myList.end())--* ++h;
    }
 
 protected:
