@@ -19,8 +19,8 @@ bb3c6b59efb8,A391,5
 
 2020/10/25 - v2<br>
 \# struct : node<br>
-	+ use smart pointer instead<br>
-	+ add two constructor<br>
+	+ use smart pointer instead
+	+ add two constructor
 \# class : MyList<br>
 	+ use smart pointer instead<br>
 	+ remove destructor : ~MyList()<br>
