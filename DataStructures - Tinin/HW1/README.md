@@ -19,10 +19,10 @@ bb3c6b59efb8,A391,5
 
 2020/10/25 - v2<br>
 \# struct : node<br>
-	- use smart pointer instead<br>
-	- add two constructor<br>
+	+ use smart pointer instead<br>
+	+ add two constructor<br>
 \# class : MyList<br>
-	- use smart pointer instead<br>
-	- remove destructor : ~MyList()<br>
-	- remove function : pop_back()<br>
+	+ use smart pointer instead<br>
+	+ remove destructor : ~MyList()<br>
+	+ remove function : pop_back()<br>
 \# separate functions involving implement a list from other functions<br>
