@@ -13,3 +13,16 @@ bb3c6b59efb8,20200104,20200106,A391,,
 **Output:**
 
 bb3c6b59efb8,A391,5
+
+---
+## Log
+
+2020/10/25 - v2
+\# struct : node
+	- use smart pointer instead
+	- add two constructor
+\# class : MyList
+	- use smart pointer instead
+	- remove destructor : ~MyList()
+	- remove function : pop_back()
+\# separate functions involving implement a list from other functions
