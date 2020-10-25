@@ -20,8 +20,8 @@ bb3c6b59efb8,A391,5
 **2020/10/25 - v2**
 
 1. **struct : node**
-	+ use smart pointer instead
-	+ add two constructor
+    + use smart pointer instead
+    + add two constructor
 
 2. **class : MyList**
     + use smart pointer instead<br>
