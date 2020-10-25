@@ -15,14 +15,14 @@ bb3c6b59efb8,20200104,20200106,A391,,
 bb3c6b59efb8,A391,5
 
 ---
-## Log
+# Log
 
-2020/10/25 - v2
-\# struct : node
-	- use smart pointer instead
-	- add two constructor
-\# class : MyList
-	- use smart pointer instead
-	- remove destructor : ~MyList()
-	- remove function : pop_back()
-\# separate functions involving implement a list from other functions
+2020/10/25 - v2<br>
+\# struct : node<br>
+	- use smart pointer instead<br>
+	- add two constructor<br>
+\# class : MyList<br>
+	- use smart pointer instead<br>
+	- remove destructor : ~MyList()<br>
+	- remove function : pop_back()<br>
+\# separate functions involving implement a list from other functions<br>
