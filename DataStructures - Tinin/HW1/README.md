@@ -18,13 +18,14 @@ bb3c6b59efb8,A391,5
 # Log
 
 **2020/10/25 - v2**
+
 **# struct : node**
 + use smart pointer instead
 + add two constructor
 
 **# class : MyList**
-	+ use smart pointer instead<br>
-	+ remove destructor : ~MyList()<br>
-	+ remove function : pop_back()<br>
++ use smart pointer instead<br>
++ remove destructor : ~MyList()<br>
++ remove function : pop_back()<br>
 
 **# separate functions involving implement a list from other functions**
