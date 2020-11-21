@@ -82,7 +82,7 @@ public:
                 break;
 
             case '}':
-                if (!valtmp->key.empty())
+                if (!str.empty())
                 {
                     valtmp->val = progStr(str);
                     if (islist.top()) nodes.top()->l.push_back(valtmp);
@@ -109,7 +109,7 @@ public:
                 break;
 
             case ']':
-                if (!valtmp->key.empty())
+                if (!str.empty())
                 {
                     valtmp->val = progStr(str);
                     if (nodes.top()->islist) nodes.top()->l.push_back(valtmp);
@@ -173,63 +173,48 @@ public:
     void _search(vector<string>& v)
     {
         if (v.empty()) return;
-        if (v.size() == 1) dfs1(root, v.front());
+        if (v.size() == 1) dfs1(root, v[0]);
         else dfs2(root, v, 0);
     }
 
-    void dfs1(shared_ptr<node> r, string& str)
+    // 搜尋只有一層
+    void dfs1(shared_ptr<node>& r, string& str)
     {
-        if (r->key == str && r->islist)
+        if (r->key == str)
         {
-            for (auto& p1 : r->l) print2(p1);
-            out = true;
+            if (r->islist) listPrint(r);
+            else if(!r->val.empty()) cout << r->val << endl, out = true;
         }
-        else
-        {
-            if (r->key == str)
-            {
-                cout << r->val << endl;
-                out = true;
-            }
-            for (auto& p1 : r->v) dfs1(p1, str);
-            for (auto& p1 : r->l) dfs1(p1, str);
-        }
+        for (auto& p1 : r->v) dfs1(p1, str);
+        for (auto& p1 : r->l) dfs1(p1, str);
     }
 
-    void print2(shared_ptr<node>r)
-    {
-        if (r->key.empty())
-        {
-            cout << r->val << endl;
-            out = true;
-        }
-        else
-        {
-            for (auto& p1 : r->l) print2(p1);
-            for (auto& p1 : r->v) print2(p1);
-        }
-    }
-
-    void dfs2(shared_ptr<node>r, vector<string>& v, int cnt)
+    // 搜尋大於一層
+    void dfs2(shared_ptr<node>& r, vector<string>& v, int cnt)
     {
         if (r->key == v[cnt])
         {
             if (cnt == v.size() - 1)
             {
-                if (r->islist) for (auto& p1 : r->l) print2(p1);
-                else cout << r->val << endl;
+                if (r->islist) listPrint(r);
+                else if (!r->val.empty()) cout << r->val << endl, out = true;
+                return;
+            }
+            else ++cnt;
+        }
+        for (auto& p1 : r->v) dfs2(p1, v, cnt);
+        for (auto& p1 : r->l) dfs2(p1, v, cnt);
+    }
+
+    void listPrint(shared_ptr<node>& r)
+    {
+        for (auto& n : r->l)
+        {
+            if (n->l.empty() && n->v.empty()) // n 為 leaf node
+            {
+                cout << n->val << endl;
                 out = true;
             }
-            else
-            {
-                for (auto& p1 : r->v) dfs2(p1, v, cnt + 1);
-                for (auto& p1 : r->l) dfs2(p1, v, cnt + 1);
-            }
-        }
-        else
-        {
-            for (auto& p1 : r->v) dfs2(p1, v, cnt);
-            for (auto& p1 : r->l) dfs2(p1, v, cnt);
         }
     }
 
@@ -246,8 +231,8 @@ int main(int argc, char* argv[])
     vector<string> v1, v2;
     ifstream infile1("case.json");
     ifstream infile2("search.txt");
-    /*ifstream infile1(argv[1]);
-    ifstream infile2(argv[2]);*/
+    //ifstream infile1(argv[1]);
+    //ifstream infile2(argv[2]);
     while (getline(infile1, str)) v1.emplace_back(str);
     while (getline(infile2, str)) v2.emplace_back(str);
     
