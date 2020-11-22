@@ -1,0 +1,124 @@
+# ====================================================================================
+# 第一筆
+# ====================================================================================
+## json:
+{"menu": {
+  "id": "file",
+  "value": "File",
+  "activate": false,
+  "popup": {
+    "menuitem": [
+      {"value": "New", "onclick": "CreateNewDoc()"},
+      {"value": "Open", "onclick": "OpenDoc()"},
+      {"value": "Close", "onclick": "CloseDoc()"}
+    ]
+  }
+}}
+
+
+## search.txt:
+menu>id
+menu>activate
+popup>menuitem>value
+
+## answer:
+file
+
+false
+
+new
+Open
+Close
+
+# ====================================================================================
+# 第二筆
+# ====================================================================================
+## json:
+{
+    "widget": {
+        "debug": "on",
+        "window": {
+            "title": "Sample Konfabulator Widget",
+            "name": "main_window",
+            "width": 500,
+            "height": 500
+        },
+        "image": {
+            "src": "Images/Sun.png",
+            "name": "sun1",
+            "hOffset": 300,
+            "vOffset": 250,
+            "alignment": "center"
+        },
+        "text": {
+            "data": "Click Here",
+            "size": 36,
+            "style": "bold",
+            "name": "text1",
+            "hOffset": 250,
+            "vOffset": 100,
+            "alignment": "center",
+            "onMouseUp": "sun1.opacity = (sun1.opacity / 100) * 90;"
+        }
+    }
+}
+
+## search.txt:
+hOffset
+vOffset
+titlyeeeeeee
+window>title
+
+## answer:
+300
+250
+
+250
+100
+
+
+
+Sample Konfabulator Widget
+
+# ====================================================================================
+# 第三筆
+# ====================================================================================
+## json:
+{"menu": {
+    "header": "SVG Viewer",
+    "shown": false,
+    "items": [
+        {"id": "Open"},
+        {"id": "OpenNew", "label": "Open New"},
+        null,
+        null,
+        null,
+        {"id": "Find", "label": "Find..."},
+        {"id": "FindAgain", "label": "Find Again"},
+        {"id": "Copy"},
+        {"id": "CopyAgain", "label": "Copy Again"},
+        {"id": "CopySVG", "label": "Copy SVG"},
+        {"id": "ViewSVG", "label": "View SVG"},
+        {"id": "ViewSource", "label": "View Source"},
+        {"id": "SaveAs", "label": "Save As"},
+        null
+    ]
+}}
+
+## search.txt:
+items>id
+shown
+
+## answer:
+Open
+OpenNew
+Find
+FindAgain
+Copy
+CopyAgain
+CopySVG
+ViewSVG
+ViewSource
+SaveAs
+
+false 

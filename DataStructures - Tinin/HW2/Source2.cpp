@@ -34,15 +34,15 @@ struct node
 
 string progStr(string str)
 {
+    // 移除前面及後面的空白
     while (!str.empty() && str.back() == ' ') str.pop_back();
-    stringstream ss(str);
-    string tmp, tmp1;
-    ss >> tmp;
-    while (!ss.eof()) ss >> tmp1, tmp += " " + tmp1;
-    if (tmp.empty()) return tmp;
-    while (!tmp.empty() && (tmp.front() == '"' || tmp.front() == ' ')) tmp.erase(tmp.begin());
-    while (!tmp.empty() && (tmp.back() == '"' || tmp.back() == ' ')) tmp.pop_back();
-    return tmp;
+    while (!str.empty() && str.front() == ' ') str.erase(str.begin());
+
+    // 移除前後的雙引號
+    if (!str.empty() && str.back() == '"') str.pop_back();
+    if (!str.empty() && str.front() == '"') str.erase(str.begin());
+
+    return str;
 }
 
 class paser
@@ -60,8 +60,8 @@ public:
     void put()
     {
         bool stop = false;
+        DQuotes = false;
         stack<shared_ptr<node>> nodes;
-
         stack<bool> islist;
 
         nodes.push(root);
@@ -73,8 +73,20 @@ public:
 
         for (auto& v : data) for (auto& ch : v)
         {
+            // 避免雙引號中出現關鍵字造成錯誤，如 "1[5" 或 "\"15"
+            if (DQuotes && !(ch == '"' && str.back() != '\\'))
+            {
+                if (ch == '"' && str.back() == '\\') str.pop_back();
+                str.push_back(ch);
+                continue;
+            }
             switch (ch)
             {
+            case '"':
+                DQuotes ^= 1;
+                str.push_back(ch);
+                break;
+
             case '{':
                 nodes.push(valtmp);
                 islist.push(false);
@@ -223,6 +235,7 @@ private:
     vector<string> search;
     shared_ptr<node> root;
     bool out;
+    bool DQuotes;
 };
 
 int main(int argc, char* argv[])
