@@ -171,13 +171,19 @@ public:
         for (auto& s : search)
         {
             out = false;
+
             vector<string> v;
             stringstream ss(s);
             while (getline(ss, str, '>')) v.emplace_back(str);
-            if (first) cout << endl;
+
+            // 若不為第一個測資則輸出一個空行
+            if (first) cout << '\n';
+
             _search(v);
             first = true;
-            if (!out) cout << endl;
+
+            // 若找不到任何資料則輸出一個空行
+            if (!out) cout << '\n';
         }
     }
 
@@ -185,7 +191,7 @@ public:
     {
         if (v.empty()) return;
         if (v.size() == 1) dfs1(root, v[0]);
-        else dfs2(root, v, 0);
+        else dfs2(root, v, 0, vector<string>());
     }
 
     // 搜尋只有一層
@@ -194,27 +200,34 @@ public:
         if (r->key == str)
         {
             if (r->islist) listPrint(r);
-            else if(!r->val.empty()) cout << r->val << endl, out = true;
+            else if(!r->val.empty()) cout << r->val << '\n', out = true;
         }
         for (auto& p1 : r->v) dfs1(p1, str);
         for (auto& p1 : r->l) dfs1(p1, str);
     }
 
     // 搜尋大於一層
-    void dfs2(shared_ptr<node>& r, vector<string>& v, int cnt)
+    void dfs2(shared_ptr<node>& r, vector<string>& v, int cnt, vector<string> traversal)
     {
+        // key 不為空就存入做檢索
+        if(!r->key.empty()) traversal.push_back(r->key);
+
         if (r->key == v[cnt])
         {
             if (cnt == v.size() - 1)
             {
+                int j = traversal.size() - 1;
+                while (cnt >= 0 && v[cnt] == traversal[j]) --cnt, --j;
+                if (cnt >= 0) return; // cnt 為 -1 才符合
+
                 if (r->islist) listPrint(r);
-                else if (!r->val.empty()) cout << r->val << endl, out = true;
+                else if (!r->val.empty()) cout << r->val << '\n', out = true;
                 return;
             }
             else ++cnt;
         }
-        for (auto& p1 : r->v) dfs2(p1, v, cnt);
-        for (auto& p1 : r->l) dfs2(p1, v, cnt);
+        for (auto& p1 : r->v) dfs2(p1, v, cnt, traversal);
+        for (auto& p1 : r->l) dfs2(p1, v, cnt, traversal);
     }
 
     void listPrint(shared_ptr<node>& r)
@@ -223,7 +236,7 @@ public:
         {
             if (n->l.empty() && n->v.empty()) // n 為 leaf node
             {
-                cout << n->val << endl;
+                cout << n->val << '\n';
                 out = true;
             }
         }
@@ -233,7 +246,7 @@ private:
     vector<string> data;
     vector<string> search;
     shared_ptr<node> root;
-    bool out;
+    bool out; // 檢查是否有輸出資料
     bool DQuotes;
 };
 
@@ -241,10 +254,10 @@ int main(int argc, char* argv[])
 {
     string str;
     vector<string> v1, v2;
-    ifstream infile1("case.json");
-    ifstream infile2("search.txt");
-    //ifstream infile1(argv[1]);
-    //ifstream infile2(argv[2]);
+    //ifstream infile1("case.json");
+    //ifstream infile2("search.txt");
+    ifstream infile1(argv[1]);
+    ifstream infile2(argv[2]);
     while (getline(infile1, str)) v1.emplace_back(str);
     while (getline(infile2, str)) v2.emplace_back(str);
     
