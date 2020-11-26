@@ -62,10 +62,7 @@ public:
         bool stop = false;
         DQuotes = false;
         stack<shared_ptr<node>> nodes;
-        stack<bool> islist;
-
         nodes.push(root);
-        islist.push(false);
 
         string str;
         auto valtmp = make_shared<node>();
@@ -88,7 +85,6 @@ public:
 
             case '{':
                 nodes.push(valtmp);
-                islist.push(false);
                 valtmp = make_shared<node>();
                 break;
 
@@ -96,16 +92,15 @@ public:
                 if (!str.empty())
                 {
                     valtmp->val = progStr(str);
-                    if (islist.top()) nodes.top()->l.push_back(valtmp);
+                    if (nodes.top()->islist) nodes.top()->l.push_back(valtmp);
                     else nodes.top()->v.push_back(valtmp);
                     valtmp = make_shared<node>();
                 }
 
                 tmp = nodes.top();
                 nodes.pop();
-                islist.pop();
 
-                if (islist.top()) nodes.top()->l.push_back(tmp);
+                if (nodes.top()->islist) nodes.top()->l.push_back(tmp);
                 else nodes.top()->v.push_back(tmp);
 
                 str.clear();
@@ -115,7 +110,6 @@ public:
             case '[':
                 valtmp->islist = true;
                 nodes.push(valtmp);
-                islist.push(true);
                 valtmp = make_shared<node>();
                 break;
 
@@ -130,7 +124,6 @@ public:
 
                 tmp = nodes.top();
                 nodes.pop();
-                islist.pop();
 
                 if (nodes.top()->islist) nodes.top()->l.push_back(tmp);
                 else nodes.top()->v.push_back(tmp);
@@ -176,14 +169,10 @@ public:
             stringstream ss(s);
             while (getline(ss, str, '>')) v.emplace_back(str);
 
-            // 若不為第一個測資則輸出一個空行
-            if (first) cout << '\n';
-
+            if (first) cout << '\n'; // 若不為第一個測資則輸出一個空行
             _search(v);
             first = true;
-
-            // 若找不到任何資料則輸出一個空行
-            if (!out) cout << '\n';
+            if (!out) cout << '\n'; // 若找不到任何資料則輸出一個空行
         }
     }
 
