@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 #include <stack>
-#include <map>
 #include <list>
 
 // reference : https://ppt.cc/fAS1wx
@@ -164,39 +163,17 @@ public:
         for (auto& s : search)
         {
             out = false;
-
             vector<string> v;
             stringstream ss(s);
             while (getline(ss, str, '>')) v.emplace_back(str);
-
             if (first) cout << '\n'; // 若不為第一個測資則輸出一個空行
-            _search(v);
+            _search(root, v, 0, vector<string>());
             first = true;
             if (!out) cout << '\n'; // 若找不到任何資料則輸出一個空行
         }
     }
 
-    void _search(vector<string>& v)
-    {
-        if (v.empty()) return;
-        if (v.size() == 1) dfs1(root, v[0]);
-        else dfs2(root, v, 0, vector<string>());
-    }
-
-    // 搜尋只有一層
-    void dfs1(shared_ptr<node>& r, string& str)
-    {
-        if (r->key == str)
-        {
-            if (r->islist) listPrint(r);
-            else if(!r->val.empty()) cout << r->val << '\n', out = true;
-        }
-        for (auto& p1 : r->v) dfs1(p1, str);
-        for (auto& p1 : r->l) dfs1(p1, str);
-    }
-
-    // 搜尋大於一層
-    void dfs2(shared_ptr<node>& r, vector<string>& v, int cnt, vector<string> traversal)
+    void _search(shared_ptr<node>& r, vector<string>& v, int cnt, vector<string> traversal)
     {
         // key 不為空就存入做檢索
         if(!r->key.empty()) traversal.push_back(r->key);
@@ -215,8 +192,8 @@ public:
             }
             else ++cnt;
         }
-        for (auto& p1 : r->v) dfs2(p1, v, cnt, traversal);
-        for (auto& p1 : r->l) dfs2(p1, v, cnt, traversal);
+        for (auto& p1 : r->v) _search(p1, v, cnt, traversal);
+        for (auto& p1 : r->l) _search(p1, v, cnt, traversal);
     }
 
     void listPrint(shared_ptr<node>& r)
