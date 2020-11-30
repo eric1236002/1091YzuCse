@@ -118,27 +118,4 @@ My lawyer says I don’t have to answer that question.
 
 
 I was fine until you asked.
-My lawyer says I don’t have to answer that question.  
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>
-
-</title></head>
-<body>
-    <form method="post" action="./DownloadFile.aspx?Source=Course&amp;CourseType=1&amp;AttachmentID=82998&amp;AttachmentFileName=%u516c%u958b%u7bc4%u4f8b%u6e2c%u8cc7%u8cc7.txt" id="form1">
-<div class="aspNetHidden">
-<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTEzNDM3NzkxOWRkE99b+haQV3ZBm26TDQfyZY8BZWY=" />
-</div>
-
-<div class="aspNetHidden">
-
-	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="F69017DB" />
-</div>
-    <div>
-    
-    </div>
-    </form>
-</body>
-</html>
+My lawyer says I don’t have to answer that question.
