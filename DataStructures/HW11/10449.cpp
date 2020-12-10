@@ -13,7 +13,7 @@ static auto __ = []
     cin.tie(0);
     cout.tie(0);
     return 0;
-};
+}();
 
 // data
 int busyness[201];

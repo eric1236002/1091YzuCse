@@ -11,7 +11,7 @@ static auto __ = []
     cin.tie(0);
     cout.tie(0);
     return 0;
-};
+}();
 
 struct edge
 {
