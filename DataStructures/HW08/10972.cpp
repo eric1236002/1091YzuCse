@@ -42,7 +42,7 @@ void dfs(int u, int parent)
         low[u] = min(low[v], low[u]);
 
         // 找到一個橋，bridge connected component 的數量加一
-        if (low[v] > low[u]) ++bcnt;
+        if (low[v] > dfn[u]) ++bcnt;
     }
 }
 
