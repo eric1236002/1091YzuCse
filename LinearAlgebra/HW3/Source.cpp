@@ -7,7 +7,7 @@
 #include <cmath>
 
 #define SIZE(c) int(c.size())
-# define PI 3.14159265358979323846
+#define PI 3.14159265358979323846
 
 using namespace std;
 
